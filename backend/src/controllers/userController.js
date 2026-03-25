@@ -53,6 +53,9 @@ exports.changePassword = async (req, res) => {
   }
 };
 
+
+// Delete the Account
+
 exports.deleteAccount = async (req, res) => {
   try {
     const result = await UserService.deleteUserWithTasks(req.user._id);
