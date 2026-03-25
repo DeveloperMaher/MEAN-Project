@@ -1,0 +1,85 @@
+<div class="dark:bg-gray-700 p-6 bg-black-50 shadow-lg rounded-xl overflow-hidden border border-black-500">
+
+    <!-- Table Header -->
+    <div class="bg-blue-50 mb-3 px-6 py-4 border-b border-gray-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 class="text-lg font-semibold text-gray-800">Your Tasks ({{filteredTasks.length}})</h2>
+
+        <div class="w-full sm:w-auto">
+            <input
+            [(ngModel)]="search"
+            (ngModelChange)="searchTask($event)"
+            type="text"
+            placeholder="Search tasks..."
+            class="w-full sm:w-64 border border-gray-300 rounded-lg px-4 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="max-h-96 overflow-y-auto">
+        <table class="w-full min-w-full text-left border-collapse">
+            <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-semibold sticky top-0 z-10">
+                <tr>
+                    <th class="px-6 py-4">Titel</th>
+                    <th class="px-6 py-4">Description</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4">Created At</th>
+                    <th class="px-6 py-4 text-center"> <i class="fas fa-rotate text-xs mr-1"></i>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="taskTableBody" class="divide-y divide-gray-100 text-sm dark:text-white">
+                
+                <tr *ngIf="loading">
+                    <td colspan="5" class="px-6 py-10">
+                        <app-spinner></app-spinner>
+                    </td>                    
+                </tr>
+
+                <tr *ngIf="!loading && filteredTasks.length === 0">
+                    <td colspan="5" class="px-6 py-4 text-center">No tasks found.</td>
+                </tr>
+
+                <tr *ngFor="let t of filteredTasks" class="hover:bg-gray-100 transition dark:hover:text-black">
+                    <td class="px-6 py-4">{{ t.title }}</td>
+
+                    <td class="px-6 py-4">{{ t.description}}</td> 
+                    
+                    <td class="px-2 py-2">
+                        <span
+                        class="inline-flex justify-center items-center w-[120px] px-3 py-1 text-xs font-semibold rounded-full border whitespace-nowrap"
+                        [ngClass]="{
+                            'bg-yellow-100 text-yellow-800 border-yellow-300': t.status === 'pending',
+                            'bg-blue-600 !text-white border-blue-700': t.status === 'in-progress',
+                            'bg-green-600 text-white border-green-700': t.status === 'done'
+                            }"
+                        >
+                        {{ t.status }}
+                        </span>
+                    </td>
+                    
+                    <td class="px-6 py-4 w-[150px]">{{ t.createdAt | date:'dd MMM yyyy' }}</td> 
+
+                    <td class="px-6 py-4 text-right">
+                        <select
+                        [disabled]="t.status === 'done'"
+                        [(ngModel)]="t.status"
+                        (ngModelChange)="changeStatus(t, $event)"
+                        [ngClass]="t.status === 'done' ? 'rounded-lg border border-gray-300 bg-gray-300 px-3 py-1.5 text-xs cursor-not-allowed' :
+                        'rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400'">
+                        >
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="done">Done</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr *ngIf="error">
+                    <td colspan="5" class="px-6 py-4 text-center text-red-600">{{ error }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

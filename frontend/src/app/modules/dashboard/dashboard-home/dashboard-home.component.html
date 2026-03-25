@@ -1,0 +1,83 @@
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto z-10">
+    <!-- Stats Overview -->
+    <app-stats></app-stats>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Task Creation Form -->
+        <div class="lg:col-span-1">
+            <div class="rounded-xl shadow-lg border border-gray-100 overflow-hidden sticky top-0">
+                <div class="bg-blue-500 p-3">
+                    <h2 class="text-white font-bold text-lg flex items-center">
+                        <i class="fas fa-plus-circle mr-2"></i> New Task
+                    </h2>
+                </div>
+                <div class="dark:bg-gray-700 p-6 space-y-4">
+                    <form #taskForm="ngForm" (ngSubmit)="createTask(taskForm)">
+                        <div class="mb-2">
+                            <label class="dark:text-white block text-sm font-medium text-gray-700 mb-1">Titel</label>
+                            <input type="text" id="taskTitle" required [(ngModel)]="title" name="title" class="w-full px-2 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" placeholder="Website Update">
+                        </div>
+                        
+                        <div class="mb-2">
+                            <label class="dark:text-white block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <textarea [(ngModel)]="description" name="description" id="taskDesc" rows="2" required class="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" placeholder="Description of Task..."></textarea>
+                        </div>
+                        
+                        <div class="relative mb-2">
+                            <label class="dark:text-white block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <select [(ngModel)]="status" name="status" id="taskStatus" class="appearance-none w-full px-2 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white">
+                                <option value="pending" class="text-yellow-500 font-semibold">Pending</option>
+                                <option value="in-progress" class="text-blue-500 font-semibold">In-progress</option>
+                                <option value="done" class="text-green-500 font-semibold">Done</option> 
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 top-6 flex items-center px-2 text-gray-500">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+
+                        <div class="relative mb-3">
+                            <label class="dark:text-white block text-sm font-medium text-gray-700 mb-1">Assagin to</label>
+                            <select
+                                id="taskAssignedTo"
+                                required
+                                class="appearance-none w-full px-2 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+                                [(ngModel)]="selectedUserId"
+                                name="taskAssignedTo"
+                            >
+                                <option *ngFor="let u of users" [value]="u._id">
+                                    {{ u.name }} 
+                                </option>
+                                <div *ngIf="loading" class="form-text">Loading users...</div>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 top-6 flex items-center px-2 text-gray-500">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 rounded-lg shadow-md hover:shadow-lg transition-all transform mt-2">
+                            Create Task
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Newest Tasks -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col h-full">
+                <div class="bg-blue-500 p-3 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <h2 class=" dark:text-gray-50 text-lg font-bold text-white">
+                        <i class="fas fa-bolt"></i> The Newest Tasks
+                    </h2>
+                </div> 
+
+                <!-- Tasks Table -->
+                <div class="flex-1 overflow-x-auto">
+                    <app-task-list></app-task-list>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

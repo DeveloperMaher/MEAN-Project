@@ -1,0 +1,11 @@
+<div class="dark:bg-gray-700 rounded-xl shadow p-4">
+  <h3 class="dark:text-white text-lg font-semibold mb-4">Task Overview</h3>
+
+  <div *ngIf="tasks.length > 0" class="w-full max-w-sm aspect-square mx-auto">
+    <canvas id="taskChart"></canvas>
+  </div>
+
+  <div *ngIf="tasks.length === 0" class="text-gray-500">
+   You don’t have any assigned tasks yet. Your task chart will appear here once tasks are assigned to you.
+  </div> 
+</div>

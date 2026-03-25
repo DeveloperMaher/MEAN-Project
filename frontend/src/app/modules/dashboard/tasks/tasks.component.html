@@ -1,0 +1,112 @@
+<div class="p-4 dark:bg-gray-700 dark:text-white shadow-lg overflow-hidden">
+
+    <!-- Table Header -->
+    <div class="bg-blue-50 dark:bg-gray-500 mb-3 px-6 py-4 border-b border-gray-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 class="text-lg dark:text-white font-semibold text-gray-800">All Tasks ({{filteredTasksCombined.length}})</h2>
+
+        <div class="w-full sm:w-auto">
+            <input
+            [(ngModel)]="search"
+            type="text"
+            placeholder="Search tasks..."
+            class="w-full sm:w-64 border dark:text-gray-600 border-gray-300 rounded-lg px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+        </div>
+        <div class="flex flex-wrap gap-3 w-full sm:w-auto">
+            <div class="relative">
+                <select [(ngModel)]="selectedUser"
+                    id="filterUser" 
+                    class="appearance-none bg-gray-50 border border-gray-300 text-gray-700 py-1 pl-4 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer">
+                    <option value="all" selected>All Users</option>
+                    <option *ngFor="let u of users" [value]="u.name">
+                        {{ u.name }} 
+                    </option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </div>
+            </div>
+            
+            <div class="relative">
+                <select
+                [(ngModel)]="selected"
+                class="appearance-none bg-gray-50 border border-gray-300 text-gray-700 py-1 pl-4 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer"
+                >
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in-progress">In-Progress</option>
+                    <option value="done">Done</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="max-h-96 overflow-y-auto">
+        <table class="w-full min-w-full text-left border-collapse">
+            <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-semibold sticky top-0 z-10">
+                <tr>
+                    <th class="px-6 py-4">Titel</th>
+                    <th class="px-6 py-4">Description</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4 inline-flex w-[120px]">Assagin to</th>
+                    <th class="px-6 py-4 text-right">Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="taskTableBody" class="divide-y divide-gray-100 text-sm">
+                
+                <tr *ngIf="loading">
+                    <td colspan="5" class="px-6 py-10">
+                        <app-spinner></app-spinner>
+                    </td>                    
+                </tr>
+
+                <tr *ngIf="!loading && filteredTasksCombined.length === 0">
+                    <td colspan="5" class="px-6 py-4 text-gray-500 font-semibold text-center">No tasks found..</td>
+                </tr>
+
+                <tr *ngFor="let t of filteredTasksCombined" class="dark:hover:bg-gray-400 hover:bg-gray-200 transition">
+                    <td class="px-6 py-4">{{ t.title }}</td>
+
+                    <td class="px-6 py-4">{{ t.description}}</td> 
+
+                    <td class="px-2 py-2">
+                        <span
+                            class="inline-flex justify-center items-center w-[120px] px-3 py-1 text-xs font-semibold rounded-full border whitespace-nowrap"
+                            [ngClass]="{
+                            'bg-yellow-100 text-yellow-800 border-yellow-300': t.status === 'pending',
+                            'bg-blue-200 text-blue-700 border-blue-700': t.status === 'in-progress',
+                            'bg-green-200 text-green-700 border-green-700': t.status === 'done'
+                            }"
+                        >
+                        {{ t.status }}
+                        </span>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        {{ t.assignedTo.name }}
+                    </td>
+                    
+                    <td class="px-6 py-4 text-right">
+                        <button 
+                            (click)="archiveTask(t._id)"
+                            [disabled]="t.status !== 'done'"
+                            class="px-3 py-1 rounded text-white"
+                            [ngClass]="t.status === 'done' ? 'bg-blue-500 hover:text-black' : 'bg-gray-300 cursor-not-allowed'">
+                            Archive
+                        </button>
+                    </td>
+                </tr>
+
+                <tr *ngIf="error">
+                    <td colspan="5" class="px-6 py-4 text-center text-red-600">{{ error }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+
+<form #registerForm="ngForm" (submit)="register(registerForm)" novalidate>
+  <h2>Register</h2>
+  <input type="text" placeholder="Name" [(ngModel)]="name" name="name" required />
+
+  <input
+    type="email"
+    name="email"
+    placeholder="Email"
+    [(ngModel)]="email"
+    required
+    email
+    pattern="^[a-zA-Z0-9._%+]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+    #emailRef="ngModel"
+  />
+  <div *ngIf="emailRef.invalid && emailRef.touched" class="error-container">
+    <small class="text-danger error" *ngIf="emailRef.errors?.['required']">Email is required</small>
+    <small class="text-danger error" *ngIf="emailRef.errors?.['email'] || emailRef.errors?.['pattern']">Invalid email format</small>
+  </div>
+  <div *ngIf="emailRef.valid && emailRef.touched" class="error-container">
+    <small class="text-success error">Email is valid</small>
+  </div>
+
+  <div class="div-password">
+      <i class="fa fa-{{eye_icon}}" (click)="showPassword()"></i>
+       <input
+        type="{{pw}}"
+        name="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+        required
+        minlength="6"
+        #passwordRef="ngModel"
+      />
+  </div>
+   <div *ngIf="passwordRef.invalid && passwordRef.touched" class="error-container">
+      <small class="text-danger error" *ngIf="passwordRef.errors?.['required']">Password is required</small>
+      <small class="text-danger error" *ngIf="passwordRef.errors?.['minlength']">
+        Password must be at least 6 characters
+      </small>
+    </div>
+       <div *ngIf="passwordRef.valid && passwordRef.touched" class="error-container">
+      <small class="text-success error">Password is valid</small>
+    </div>
+
+    <button 
+      type="submit" 
+      [disabled]="registerForm.invalid || isSubmitting"
+      class="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+    >
+      <svg 
+        *ngIf="isSubmitting"
+        class="animate-spin h-5 w-5 mr-2 text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+       >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v8H4z"
+        ></path>
+      </svg>
+
+      <span *ngIf="!isSubmitting">Register</span>
+    </button>
+ 
+  <p>
+    Already have an account?
+    <a routerLink="/login">Login here</a>
+  </p>
+</form>

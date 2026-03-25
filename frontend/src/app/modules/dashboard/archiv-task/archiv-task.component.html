@@ -1,0 +1,93 @@
+<div class="p-4 dark:bg-gray-700 dark:text-white shadow-lg overflow-hidden">
+
+    <!-- Table Header -->
+    <div class="bg-blue-50 dark:bg-gray-500 mb-3 px-6 py-4 border-b border-gray-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 class="text-lg dark:text-white font-semibold text-gray-800">Archived Tasks</h2>
+
+ 
+    </div>
+
+    <!-- Table -->
+    <div class="max-h-96 overflow-y-auto">
+        <table class="w-full min-w-full text-left border-collapse">
+            <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-semibold sticky top-0 z-10">
+                <tr>
+                    <th class="px-6 py-4">Titel</th>
+                    <th class="px-6 py-4">Description</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4 inline-flex w-[120px]">Assagin to</th>
+                    <th class="px-6 py-4 text-center">Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="taskTableBody" class="divide-y divide-gray-100 text-sm">
+                
+                <tr *ngIf="loading">
+                    <td colspan="5" class="px-6 py-10">
+                        <div class="flex flex-col items-center justify-center text-center">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 mb-3">
+                                <svg
+                                class="w-6 h-6 animate-spin text-blue-600"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                >
+                                <circle
+                                    class="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    stroke-width="4"
+                                ></circle>
+                                <path
+                                    class="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                                ></path>
+                                </svg>
+                            </div>
+                            <p class="text-sm font-semibold text-gray-700">Loading tasks</p>
+                            <p class="text-xs text-gray-400 mt-1">Please wait a moment...</p>
+                        </div>
+                    </td>                    
+                </tr>
+
+                <tr *ngIf="!loading && archivedTasks.length === 0">
+                    <td colspan="5" class="px-6 py-4 text-gray-500 font-semibold text-center">No tasks archived yet..</td>
+                </tr>
+
+                <tr *ngFor="let t of archivedTasks" class="dark:hover:bg-gray-400 hover:bg-gray-200 transition">
+                    <td class="px-6 py-4">{{ t.title }}</td>
+
+                    <td class="px-6 py-4">{{ t.description}}</td> 
+
+                    <td class="px-2 py-2">
+                        <span
+                            class="bg-green-200 text-green-700 border-green-700 inline-flex justify-center items-center w-[120px] px-3 py-1 text-xs font-semibold rounded-full border whitespace-nowrap"
+                        >
+                        {{ t.status }}
+                        </span>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        {{ t.assignedTo.name }}
+                    </td>
+
+                    <td class="px-6 py-4">
+                           <button 
+                            (click)="restoreTask(t._id)"
+                            Class="bg-blue-500 text-white px-3 py-1 rounded hover:text-black">
+                            Restore
+                        </button>
+                    </td>
+                </tr>
+
+                <tr *ngIf="error">
+                    <td colspan="5" class="px-6 py-4 text-center text-red-600">{{ error }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

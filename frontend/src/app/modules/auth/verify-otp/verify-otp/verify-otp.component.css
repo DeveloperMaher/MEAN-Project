@@ -1,0 +1,65 @@
+/* Full page container */
+.otp-container{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#f4f6f9;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Form card */
+form{
+  background:#ffffff;
+  padding:35px 30px;
+  border-radius:10px;
+  width:350px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+  text-align:center;
+}
+
+/* Title */
+form h2{
+  margin-bottom:25px;
+  color:#333;
+}
+
+/* Inputs */
+form input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  font-size:14px;
+  transition:0.3s;
+}
+
+form input:focus{
+  outline:none;
+  border-color:#4a90e2;
+}
+
+/* Button */
+form button{
+  width:100%;
+  padding:12px;
+  background:#4a90e2;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+form button:hover{
+  background:#357abd;
+}
+
+/* Message */
+form p{
+  margin-top:15px;
+  font-size:14px;
+  color:#555;
+}

@@ -1,0 +1,91 @@
+
+<div class="p-4 dark:bg-gray-700 dark:text-white shadow-lg overflow-hidden">
+
+    <!-- Table Header -->
+    <div class="bg-blue-50 dark:bg-gray-500 mb-3 px-6 py-4 border-b border-gray-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 class="text-lg font-semibold dark:text-white text-gray-800">Users ({{filteredUsers.length}})</h2>
+
+        <div class="w-full sm:w-auto">
+            <input
+            [(ngModel)]="search"
+            (ngModelChange)="searchUser($event)"
+            type="text"
+            placeholder="Search users..."
+            class="w-full sm:w-64 border dark:text-gray-600 border-gray-300 rounded-lg px-4 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+        </div>
+    </div>
+
+    <div class="max-h-96 overflow-y-auto">
+        <table class="w-full min-w-full text-left border-collapse">
+
+            <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-semibold sticky top-0 z-10">
+                <tr>
+                    <th class="px-6 py-3">Name</th>
+                    <th class="px-6 py-3">Email</th>
+                    <th class="px-6 py-3">Verified</th>
+                    <th class="px-6 py-3">Role</th>
+                    <th class="px-6 py-3">Tasks</th>
+                    <th class="px-6 py-3">Created At</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-100 text-sm">
+
+                <tr *ngIf="loading">
+                    <td colspan="6" class="px-6 py-10">
+                       <app-spinner></app-spinner>
+                    </td>
+                </tr>
+
+                <tr *ngFor="let user of filteredUsers" class="dark:hover:bg-gray-400 hover:bg-gray-200 transition" id="{{user._id}}">
+                    <!-- <pre>{{ user | json }}</pre> -->
+                    <td class="px-6 py-4">
+                        <span
+                            [class.text-green-500]="(onlineUsers$ | async)?.includes(user._id)"
+                            [class.text-gray-400]="!(onlineUsers$ | async)?.includes(user._id)"
+                        >
+                        &#10687;
+                        </span>
+                        {{user.name}}  
+                    </td>
+
+                    <td class="px-6 py-4">
+                        {{user.email}}
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <span
+                            class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium"
+                            [ngClass]="user.isVerified
+                            ? 'bg-green-200 text-green-700'
+                            : 'bg-red-100 text-red-700'"
+                        >
+                            {{ user.isVerified ? 'Verified' : 'Not Verified' }}
+                        </span>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 text-xs font-medium bg-blue-200 text-blue-700 rounded-full">
+                            {{user.role}}
+                        </span>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <span *ngIf="getTasksForUser(user._id) > 0" class="px-2 py-1 text-xs font-semibold dark:text-gray-800 bg-gray-500 text-white rounded-lg">
+                            {{getTasksForUser(user._id)}}
+                        </span>
+                        <span *ngIf="getTasksForUser(user._id) === 0">No Tasks</span>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        {{ user.createdAt | date:'dd MMM yyyy' }}
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+

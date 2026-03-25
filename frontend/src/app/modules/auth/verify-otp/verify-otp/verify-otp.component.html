@@ -1,0 +1,15 @@
+<div class="otp-container">
+
+  <form (submit)="verifyOtp(); $event.preventDefault()">
+
+    <h2>Verify OTP</h2>
+
+    <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+
+    <input maxlength="6" type="text" placeholder="OTP" [(ngModel)]="otp" name="otp" required />
+
+    <button type="submit">Verify</button>
+    
+  </form>
+
+</div>

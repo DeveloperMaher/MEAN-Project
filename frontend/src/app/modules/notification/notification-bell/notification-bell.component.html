@@ -1,0 +1,84 @@
+<!-- Wrapper -->
+<div class="relative inline-block text-left">
+
+  <!-- Bell Button -->
+  <button
+    (click)="toggleDropdown()"
+    class="relative p-2 rounded-full hover:text-gray-50 transition"
+  >
+    <i class="fas fa-bell text-xl"></i>
+
+    <span
+      *ngIf="unreadCount > 0"
+      class="absolute -top-0 -right-0 bg-red-500 text-white text-s w-5 h-5 flex items-center justify-center rounded-full"
+    >
+      {{ unreadCount }}
+    </span>
+  </button>
+
+  <!-- ================= MOBILE (BOTTOM SHEET) ================= -->
+  <ng-container *ngIf="dropdownOpen">
+
+    <!-- Overlay -->
+    <div
+      class="fixed inset-0 bg-black/30 z-40 sm:hidden"
+      (click)="toggleDropdown()"
+    ></div>
+
+    <!-- Mobile Panel -->
+    <div
+      class="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50 sm:hidden animate-slideUp"
+    >
+      <div class="p-4 border-b font-semibold text-gray-700">
+        Notifications
+      </div>
+
+      <div class="max-h-80 overflow-y-auto">
+        <ng-container *ngTemplateOutlet="notificationList"></ng-container>
+      </div>
+    </div>
+
+    <!-- ================= DESKTOP (DROPDOWN) ================= -->
+    <div
+      class="hidden sm:block absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden z-50 animate-fadeIn"
+    >
+      <div class="px-4 py-2 border-b font-semibold text-gray-700">
+        Notifications
+      </div>
+
+      <div class="max-h-80 overflow-y-auto">
+        <ng-container *ngTemplateOutlet="notificationList"></ng-container>
+      </div>
+    </div>
+
+  </ng-container>
+
+</div>
+
+<!-- ================= REUSABLE LIST TEMPLATE ================= -->
+<ng-template #notificationList>
+
+  <div
+    *ngFor="let n of notifications"
+    (click)="markAsRead(n)"
+    class="px-4 py-3 cursor-pointer transition flex flex-col gap-1 border-b last:border-none"
+    [ngClass]="{
+      'bg-blue-50 font-bold hover:bg-gray-100': !n.read,
+      'bg-white hover:bg-gray-50': n.read
+    }"
+  >
+    <span class="text-sm text-gray-800">
+      {{ n.message }}
+    </span>
+
+    <small class="text-xs text-gray-400">
+      {{ n.createdAt | date:'short' }}
+    </small>
+  </div>
+
+  <div *ngIf="notifications.length === 0"
+       class="p-4 text-center text-gray-400 text-sm">
+    No notifications
+  </div>
+
+</ng-template>

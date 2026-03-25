@@ -1,0 +1,117 @@
+/* Center page */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #0db7ed, #0db7ed);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Form container */
+form {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Title */
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Inputs */
+input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.2s;
+  width: 100%;
+}
+
+/* Input focus effect */
+input:focus {
+  outline: none;
+  border-color: #0db7ed;
+  box-shadow: 0 0 4px rgba(99,102,241,0.4);
+}
+
+.div-password {
+  position:relative
+}
+.div-password i{
+  position:absolute;
+  top: 10px;
+  right: 10px;
+  color: #a7a7a7;
+  cursor: pointer;
+}
+
+/* Button */
+button {
+  padding: 8px;
+  border: none;
+  border-radius: 20px;
+  background: #0db7ed;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Button hover */
+button:hover {
+  background: #2297be;
+}
+
+/* Message */
+p {
+  margin-top: 15px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  
+}
+
+/* Link container */
+p {
+  text-align: center;
+  margin-top: 15px;
+  color: #33333394;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* Link style */
+a {
+  color: #0db7ed;
+  text-decoration: none;
+  margin-left: 5px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+/* Hover effect */
+a:hover {
+  text-decoration: underline;
+  color: #2297be;
+}
+
+
+.error-container {
+  position: relative;
+}
+
+.error-container .error {
+  font-size: 12px;
+  position: absolute;
+  top: -14px;
+}
