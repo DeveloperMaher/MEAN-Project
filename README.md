@@ -1,16 +1,22 @@
 # Task Management System (MEAN Stack) 🚀
 
-A full-stack task management application built with Node.js, Angular, MongoDB, and real-time notifications using Socket.IO.
+A full-stack task management application built with Node.js, Angular, MongoDB, and Socket.IO.  
+The app includes authentication, OTP verification, task management, role-based access, and real-time notifications.
+
 
 ---
 
 ## 🧠 Features
 
 * User authentication (JWT)
-* Task creation & management
+* Account verification via OTP
+* Task creation and management
 * Real-time notifications (Socket.IO)
+* Admin dashboard and user dashboard
+* Task filtering by user and by task status
+* Settings section
+* Responsive design
 * Role-based access
-* Redis queue (background jobs)
 * Dockerized setup
 
 ---
@@ -21,6 +27,7 @@ A full-stack task management application built with Node.js, Angular, MongoDB, a
 MEAN-Project/
 ├── backend/
 ├── frontend/
+├── screenshots/
 ├── docker-compose.yml
 ```
 
@@ -33,7 +40,6 @@ MEAN-Project/
 * Node.js
 * Express
 * MongoDB
-* Redis
 * Socket.IO
 
 ### Frontend
@@ -113,6 +119,28 @@ ng serve
 
 * Live notifications
 * Socket-based updates
+
+---
+
+## 📸 Screenshots
+
+### Dashboard Admin
+![Admin Dashboard Screenshot](screenshots/Dashboard-Admin.png)
+![Tasks Screenshot](screenshots/Admin-all-tasks.png)
+![Notifications Screenshot](screenshots/Admin-Notifications.png)
+![Settings Screenshot](screenshots/Admin-Settings.png)
+
+### Dashboard User
+![User Dashboard Screenshot](screenshots/Dashboard-User.png)
+![User Tasks Screenshot](screenshots/User-all-tasks.png)
+![User Settings Screenshot](screenshots/User-Settings.png)
+
+### Login & Register 
+![Login Screenshot](screenshots/login.png)
+![Register Screenshot](screenshots/register.png)
+
+### Responsive Design 
+![Responsive Screenshot](screenshots/responsive.png)
 
 ---
 
