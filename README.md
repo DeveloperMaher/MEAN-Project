@@ -140,7 +140,7 @@ ng serve
 ![Register Screenshot](screenshots/register.png)
 
 ### Responsive Design 
-![Responsive Screenshot](screenshots/responsive.png)
+<img src="screenshots/responsive.png" alt="Responsive Screenshot" width="500">
 
 ---
 
