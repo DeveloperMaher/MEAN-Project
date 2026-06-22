@@ -144,14 +144,6 @@ ng serve
 
 ---
 
-## 📌 Notes
-
-* Do not commit `.env`
-* Ensure MongoDB & Redis are running
-* Use Docker for easiest setup
-
----
-
 ## 👨‍💻 Author
 
 Developer Maher
